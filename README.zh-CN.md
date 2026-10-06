@@ -2,154 +2,110 @@
 
 [English](README.md) | 简体中文
 
-一套面向算法型理工科期末考试、以证据为约束的生存型 Skill 合集。
+仓库：[Ryoonmyway/exam-hacker](https://github.com/Ryoonmyway/exam-hacker)
 
-Exam Hacker 不是摘要生成器，也不假装每个知识点都值得平均用力。它把真实课程资料、用户当前掌握状态和剩余时间，压成一个可以执行、可以观测、可以重规划的小闭环。优先级、战略放弃、评分和改计划都必须能回到证据。
+面向计算、推导、证明等可核验理工科任务的考试复习技能。告诉它你要复习什么、提交作答或直接说“继续”；它负责读取进度、安排必要讲解与练习，并推进到下一项需要你参与的任务。
 
-## 为什么拆成 Skill 合集
+## 从需求选功能
 
-旧版大杂烩把六种不同决策揉在一起。现在每个状态转换只有一个负责人：
-
-| Skill | 职责 |
+| 你现在想做什么 | 可以直接使用 |
 |---|---|
-| `exam-hacker` | 读取状态，只选择一个专家，并传递已经知道的信息 |
-| `exam-hacker-triage` | 审计资料、收集一分钟掌握快照、创建策略第 1 版、选择最先执行的 1–3 个 Session |
-| `exam-hacker-compress` | 压缩一条算法型知识链，或用户明确指出的单个断点 |
-| `exam-hacker-solve` | 完整求解一道题，或逆向还原一条可复现的解题链 |
-| `exam-hacker-drill` | 执行一次隐藏答案的 Session、批改真实作答、追加掌握证据 |
-| `exam-hacker-replan` | 消费新证据或可用时间变化，生成下一版策略，并选择接下来的 1–3 个 Session |
+| 开始复习、不确定先做什么、换对话继续 | `$exam-hacker` |
+| 判断当前最该补什么，检查时间是否够用 | `$exam-hacker-triage` |
+| 按板块复习方法，或解释一个卡住的环节 | `$exam-hacker-compress` |
+| 看一道题的完整解法 | `$exam-hacker-solve` |
+| 做题、让它出题、提交答案或检验理解 | `$exam-hacker-drill` |
+| 新表现或时间变化后调整安排 | `$exam-hacker-replan` |
+
+正常学习无需记住后五个名称。内部按需衔接，结尾直接给具体任务、预计用时、提交内容和完成标准。请求“只讲解”“只解题”“暂停”时按你的范围结束。
+
+## 学习怎么推进
+
+初始诊断 → 当前板块 → 必要时补讲 → 做题 → 记录表现 → 必要时调整 → 下一项任务。
+
+- 用已有表现定位能力缺口，不强制每次先做整套诊断。
+- P0表示阻断当前目标，P1表示当前重要失分点，P2表示可后置问题；它们由目标、证据、前置关系和时间共同决定。
+- “我懂了”会被记录，但不会自动变成“已验证掌握”。
+- 没有习题也能开始：按目标选择原题、改编题或经过核验的生成题；缺少考试依据时说明通用练习的边界。
+- 批改后直接给下一动作，无需再调用路由批准交接。
+- 显示完整答案后，后续验证使用新题；不把看懂答案算成独立完成。
+
+## Markdown 是唯一学习存档
 
 ```text
-triage -> [compress | solve] -> drill -> replan -> drill
+course-root/
+  reference/                 原始资料
+  progress/
+    progress.md              目标、当前判断、待答任务、下一步
+    materials.md             来源、已核实范围与缺口
+    notes/<板块或题目>.md     方法讲解或完整解题
+    practice/<任务编号>.md    题目、真实作答、提示与反馈
 ```
 
-`compress` 和 `solve` 是可选的备战操作。只有 `drill` 能把用户真实表现变成掌握证据；只有 `replan` 能修改已经存在的策略。
+按需创建文件，同一内容只维护一处，其他位置链接引用。不生成学习用 JSON/JSONL，也没有双份状态同步。固定栏目、编号和链接提供足够结构。平台安装用的 YAML 配置不属于学习存档。
 
-## 安装
+出题时保存完整题面和答案暴露情况；收到反馈就更新相关状态。历史作答保留，修正另记。进度入口只保存当前结论及证据链接，避免越写越长。
 
-### 给检测到的所有 Agent 安装完整合集
-
-需要已经安装 Node.js，并能使用 `npx`。
-
-```bash
-npx -y skills add Wh1te358/skills-by-Wh1te -g --all
+在同一课程目录开新对话：
+```text
+用 $exam-hacker 继续这个课程，先读取 progress/progress.md，恢复正在进行的任务。
 ```
 
-当前仓库只包含上面六个 Exam Hacker Skill。这里的 `--all` 是故意的：只安装 `exam-hacker` 会得到一个找不到五个下游专家的空壳路由器。
+如果新对话不在课程目录，附上课程绝对路径。系统不会声称自己能在没有文件访问权限时恢复进度，也不会自动替你新建聊天。
 
-### 只安装到 Codex
+## 使用示例
 
-如果你只需要全局安装到 Codex，或者以后仓库中出现了无关 Skill，使用显式清单：
-
-```bash
-npx -y skills add Wh1te358/skills-by-Wh1te -g -y --agent codex --skill exam-hacker exam-hacker-triage exam-hacker-compress exam-hacker-solve exam-hacker-drill exam-hacker-replan
+```text
+用 $exam-hacker 帮我开始结构力学复习。考试日期是……，
+目标是……，实际还可投入……分钟。资料在 reference/。
+请直接开始第一项有用的学习任务。
 ```
 
-只查看安装器识别到了什么，不执行安装：
-
-```bash
-npx -y skills add Wh1te358/skills-by-Wh1te --list
+```text
+用 $exam-hacker-compress 复习力法这个板块。根据已有作答，
+只补当前需要的方法，再让我练习。
 ```
 
-### Codex Python 备用安装
-
-如果没有 `npx`，但 Codex 内置 Skill installer 存在，可以在一条命令中安装六个目录。不要只安装路由器。
-
-```bash
-python "$HOME/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py" --repo "Wh1te358/skills-by-Wh1te" --ref "codex/exam-hacker-skill" --path exam-hacker exam-hacker-triage exam-hacker-compress exam-hacker-solve exam-hacker-drill exam-hacker-replan
+```text
+用 $exam-hacker-drill 给我一道能检验兼容条件理解的题。
+我没有提供习题，但课件在 reference/。
 ```
 
-### 从本地 clone 安装
+```text
+用 $exam-hacker-solve 完整解答这道题。这次只看讲解。
+```
 
-在仓库根目录运行：
+## 从本地仓库安装
 
+从上述仓库获取代码后，在本地仓库根目录运行（需要 Node.js 和 npx）：
 ```bash
 npx -y skills add . -g --all
 ```
 
-安装后重启 Agent，或开启一个新会话，然后调用：
+安装后开启新会话。六个技能共用入口目录中的学习记录与续接规则，建议安装完整合集。运行时只检查当前需要的能力；不因无关专家缺失阻断已经可执行的任务。
+
+## 旧存档
+
+遇到旧 strategy.json 或 mastery-evidence.jsonl 时，按 [迁移说明](exam-hacker/references/migration.md) 一次性导入 Markdown。先预览，再应用；核对并备份原始字节后，旧文件退出正常读取和写入。存在新旧冲突时先对账，不覆盖。
 
 ```text
-$exam-hacker
+python <exam-hacker目录>/scripts/migrate_legacy.py <课程目录>
+python <exam-hacker目录>/scripts/migrate_legacy.py <课程目录> --apply
 ```
 
-路由器在读取课程状态前会严格检查五个专家是否安装完整。遇到缺失、格式错误或重复冲突，它会报告具体问题，不会偷偷退回已经停用的旧版大杂烩。
+## 保留的证据边界
 
-## 推荐课程目录
+- 考试范围、分值和教师强调必须有来源；用户自评不是考试价值证据。
+- 战略放弃需明确依据、时间约束、代价与反转条件。
+- 扫描资料要检查实际渲染页面；OCR仅帮助定位，局部读取不能冒充全文核实。
+- 生成题和推导答案明确标注来源与验证状态，不冒充真题或官方评分。
+- 当前支持可检验的算法型理工科任务，不把开放式作文强塞进计算题流程。
 
-把原始证据和生成状态分开：
+## 验证
 
 ```text
-course-root/
-  reference/
-    textbook/
-    slides/
-    review-sheet/
-    homework/
-    past-papers/
-    answer-keys/
-  progress/
-    00_survival-outline.md
-    strategy.json
-    mastery-evidence.jsonl
-    artifacts/
-    drills/
-    history/
+python exam-hacker/evals/test_learning_records.py
+python exam-hacker/scripts/check_learning_record.py <课程目录>
 ```
 
-- `reference/` 只放预先存在的原始资料。
-- `progress/` 只放 Agent 生成的策略、产物、练习和追加式证据。
-- 文件存在，或者 PDF 有这个文件名，不代表 Agent 已经读过它。
-
-## 使用示例
-
-第一次分诊：
-
-```text
-$exam-hacker
-我还有 5 天考结构力学，目标 80 分，真正可用时间是 18 小时。资料都在 reference/。请先审计证据，让我输入一分钟掌握快照，然后只生成最先执行的几个 Session。
-```
-
-开始下一个 Session：
-
-```text
-$exam-hacker
-开始我的下一个 Session。在我提交作答前隐藏答案。
-```
-
-直接完整解一道题：
-
-```text
-$exam-hacker-solve
-把这道超静定梁题完整解成一条可复现链。引用题目、理论和答案对应的位置，并区分哪些步骤经过参考答案验证，哪些只是 Agent 推导。
-```
-
-压缩一条知识链：
-
-```text
-$exam-hacker-compress
-把力法从选择基本未知量到最终内力的链条压缩出来。每一步都必须能复现，最后给一个隐藏答案的主动提取题。
-```
-
-## 证据规则
-
-- 没有考试价值证据，就不能给出确定优先级，更不能直接战略放弃。
-- 战略放弃必须同时有直接证据、容量不足、放弃代价和反转条件。
-- 掌握快照是行为锚定的 `0–3` 快速自报，不是强迫用户完成一套冗长基线测试。
-- 看过答案和例题只能算 `practice_only`，不能证明掌握。
-- 只有用户在隐藏答案条件下的真实表现，才能进入 `mastery-evidence.jsonl`。
-- OCR 和缩略图只能定位页面，不能作为公式、图表、答案或评分标记的最终证据。
-- 扫描版或纯图片 PDF 会触发页面渲染和视觉读取。结论只能引用真正看过的页面；局部抽查不能冒充全文审计。
-
-## 当前边界
-
-当前版本专门优化计算、推导、证明和其他确定性理工科知识链。整门课 A4 小抄、泛化知识图谱、大规模题库和非算法型记忆课程压缩暂时不在范围内。宁可明确不做，也不把旧版大杂烩偷偷塞回路由器。
-
-## 仓库内验证资产
-
-仓库包含：
-
-- 覆盖分诊、压缩、解题、训练和重规划的结构力学夹具；
-- 策略状态、压缩产物、完整解题产物、掌握事件和重规划转换验证器；
-- 闭环集成测试结果；
-- 能区分文本型、混合型、扫描型和无可读信号 PDF 的检测器。
+前者检验迁移、回滚、链接、重复记录和容量边界；后者是轻量记录检查。二者都不能证明教学质量或数学正确性。行为场景及实际验证结果见 [评测入口](exam-hacker/evals/cases.md)。

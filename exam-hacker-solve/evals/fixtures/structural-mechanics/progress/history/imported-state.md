@@ -1,0 +1,527 @@
+# Imported legacy history
+
+Historical snapshot only; current decisions live in ../progress.md.
+
+## strategy.json
+
+- **course**:
+  - **id**: structural-mechanics-final
+- **loop_state**:
+  - **strategy_revision**: 1
+- **source_materials**:
+  - Item 1:
+    - **id**: problem-sheet
+  - Item 2:
+    - **id**: equilibrium-note
+  - Item 3:
+    - **id**: answer-key
+- **knowledge_graph**:
+  - **nodes**:
+    - Item 1:
+      - **id**: beam-equilibrium
+    - Item 2:
+      - **id**: support-reactions
+- **action_list**:
+  - Item 1:
+    - **id**: session-beam-reactions-01
+    - **knowledge_node_ids**:
+      - Item 1:
+        - beam-equilibrium
+      - Item 2:
+        - support-reactions
+    - **expected_outputs**:
+      - Item 1:
+        - **id**: solution-beam-reactions-reference
+        - **type**: solution_chain
+      - Item 2:
+        - **id**: solution-beam-reactions-derived
+        - **type**: solution_chain
+
+## progress/artifacts/solution-beam-reactions-derived.solve.json
+
+- **contract_version**: exam-hacker-solve/v1
+- **artifact_type**: solved-problem-chain
+- **artifact_id**: solution-beam-reactions-derived
+- **course_id**: structural-mechanics-final
+- **strategy_revision_observed**: 1
+- **session_id**: session-beam-reactions-01
+- **output_id**: solution-beam-reactions-derived
+- **display_path**: progress/artifacts/solution-beam-reactions-derived.md
+- **answer_policy**: full_solution
+- **practice_status**: practice_only
+- **solution_status**: agent_derived
+- **residual_uncertainty**: unknown (legacy null)
+- **problem**:
+  - **id**: problem-beam-reactions-01
+  - **statement**: A simply supported 6 m beam carries a 12 kN downward point load 2 m from A; find reactions at A and B.
+  - **target_node_ids**:
+    - Item 1:
+      - beam-equilibrium
+    - Item 2:
+      - support-reactions
+  - **source_refs**:
+    - Item 1:
+      - **material_id**: problem-sheet
+      - **role**: problem
+      - **locator**: Beam Reaction Problem
+      - **claim**: The source provides span, load, location, supports, and sign convention.
+    - Item 2:
+      - **material_id**: equilibrium-note
+      - **role**: theory
+      - **locator**: Plane Equilibrium
+      - **claim**: Static equilibrium supplies force and moment equations.
+- **nodes**:
+  - Item 1:
+    - **id**: span-l
+    - **label**: Span L
+    - **role**: given
+    - **mathematical_meaning**: L = 6 m
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: problem-sheet
+        - **role**: problem
+        - **locator**: sentence 1
+        - **claim**: Beam span is 6 m.
+  - Item 2:
+    - **id**: load-p
+    - **label**: Point load P
+    - **role**: given
+    - **mathematical_meaning**: P = 12 kN downward
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: problem-sheet
+        - **role**: problem
+        - **locator**: sentence 2
+        - **claim**: Point load is 12 kN downward.
+  - Item 3:
+    - **id**: distance-a
+    - **label**: Load distance a
+    - **role**: given
+    - **mathematical_meaning**: a = 2 m from A
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: problem-sheet
+        - **role**: problem
+        - **locator**: sentence 2
+        - **claim**: Load acts 2 m from A.
+  - Item 4:
+    - **id**: moment-equilibrium
+    - **label**: Moment equilibrium about A
+    - **role**: formula
+    - **mathematical_meaning**: sum M_A = 0
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: equilibrium-note
+        - **role**: theory
+        - **locator**: Plane Equilibrium
+        - **claim**: Moment sum about any point is zero.
+  - Item 5:
+    - **id**: vertical-equilibrium
+    - **label**: Vertical equilibrium
+    - **role**: formula
+    - **mathematical_meaning**: sum F_y = 0
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: equilibrium-note
+        - **role**: theory
+        - **locator**: Plane Equilibrium
+        - **claim**: Vertical force sum is zero.
+  - Item 6:
+    - **id**: reaction-b
+    - **label**: Reaction at B
+    - **role**: result
+    - **mathematical_meaning**: R_B = 4 kN upward
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: equilibrium-note
+        - **role**: theory
+        - **locator**: Plane Equilibrium
+        - **claim**: Moment equilibrium determines R_B.
+  - Item 7:
+    - **id**: reaction-a
+    - **label**: Reaction at A
+    - **role**: result
+    - **mathematical_meaning**: R_A = 8 kN upward
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: equilibrium-note
+        - **role**: theory
+        - **locator**: Plane Equilibrium
+        - **claim**: Vertical equilibrium determines R_A.
+  - Item 8:
+    - **id**: support-reactions-result
+    - **label**: Support reaction pair
+    - **role**: result
+    - **mathematical_meaning**: (R_A, R_B) = (8, 4) kN upward
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: equilibrium-note
+        - **role**: theory
+        - **locator**: Plane Equilibrium
+        - **claim**: The reaction pair follows from the two equilibrium equations.
+- **initial_node_ids**:
+  - Item 1:
+    - span-l
+  - Item 2:
+    - load-p
+  - Item 3:
+    - distance-a
+  - Item 4:
+    - moment-equilibrium
+  - Item 5:
+    - vertical-equilibrium
+- **steps**:
+  - Item 1:
+    - **id**: step-moment-about-a
+    - **input_node_ids**:
+      - Item 1:
+        - span-l
+      - Item 2:
+        - load-p
+      - Item 3:
+        - distance-a
+      - Item 4:
+        - moment-equilibrium
+    - **output_node_ids**:
+      - Item 1:
+        - reaction-b
+    - **trigger**: Two vertical reactions are unknown, so take moments about A to eliminate R_A.
+    - **operation**: Set the net moment about A to zero and solve for R_B.
+    - **equation_or_rule**: R_B(6) - 12(2) = 0, so R_B = 4 kN.
+    - **why**: The reaction at A has zero lever arm about A.
+    - **check**: The positive result means R_B acts upward.
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: equilibrium-note
+        - **role**: theory
+        - **locator**: Plane Equilibrium
+        - **claim**: Moment equilibrium determines R_B.
+  - Item 2:
+    - **id**: step-vertical-force-balance
+    - **input_node_ids**:
+      - Item 1:
+        - load-p
+      - Item 2:
+        - reaction-b
+      - Item 3:
+        - vertical-equilibrium
+    - **output_node_ids**:
+      - Item 1:
+        - reaction-a
+    - **trigger**: R_B is known and one vertical reaction remains.
+    - **operation**: Set the vertical force sum to zero and solve for R_A.
+    - **equation_or_rule**: R_A + 4 - 12 = 0, so R_A = 8 kN.
+    - **why**: Static vertical acceleration is zero.
+    - **check**: R_A + R_B equals the applied load.
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: equilibrium-note
+        - **role**: theory
+        - **locator**: Plane Equilibrium
+        - **claim**: Vertical force equilibrium determines R_A.
+  - Item 3:
+    - **id**: step-report-reaction-pair
+    - **input_node_ids**:
+      - Item 1:
+        - reaction-a
+      - Item 2:
+        - reaction-b
+    - **output_node_ids**:
+      - Item 1:
+        - support-reactions-result
+    - **trigger**: Both reactions are known.
+    - **operation**: Report magnitudes, directions, and units together.
+    - **equation_or_rule**: (R_A, R_B) = (8, 4) kN upward.
+    - **why**: The problem asks for the complete reaction pair.
+    - **check**: Both results carry force units and directions.
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: problem-sheet
+        - **role**: problem
+        - **locator**: final sentence
+        - **claim**: Both reactions are requested.
+- **endpoint**:
+  - **node_id**: support-reactions-result
+  - **statement**: Determine both vertical support reactions with magnitude, direction, and units.
+  - **final_answer**: R_A = 8 kN upward; R_B = 4 kN upward.
+  - **units**: kN
+  - **acceptance_condition**: Force and moment equilibrium both close with correct dimensions.
+- **verification_checks**:
+  - Item 1:
+    - **id**: check-equilibrium
+    - **type**: equilibrium
+    - **procedure**: Substitute reactions into force and moment balances.
+    - **observed_result**: 8 + 4 - 12 = 0 and 4(6) - 12(2) = 0.
+    - **passed**: true
+  - Item 2:
+    - **id**: check-dimensions
+    - **type**: dimensional
+    - **procedure**: Check that the force balance uses kN and moment balance uses kN m.
+    - **observed_result**: Every term has the required force or moment dimension.
+    - **passed**: true
+- **branch_conditions**:
+  - Item 1:
+    - If the load location changes, recompute the moment equation before the force equation.
+- **failure_boundaries**:
+  - Item 1:
+    - Additional supports or applied couples require additional unknowns or moment terms.
+- **transfer_problem**:
+  - **prompt**: For the same beam, replace the point load with a 4 kN/m uniform load over the full span and find both reactions.
+  - **changed_conditions**:
+    - Item 1:
+      - Point load is replaced by a full-span uniform load.
+  - **answer_hidden**: true
+  - **target_node_ids**:
+    - Item 1:
+      - reaction-a
+    - Item 2:
+      - reaction-b
+    - Item 3:
+      - support-reactions-result
+
+## progress/artifacts/solution-beam-reactions-reference.solve.json
+
+- **contract_version**: exam-hacker-solve/v1
+- **artifact_type**: solved-problem-chain
+- **artifact_id**: solution-beam-reactions-reference
+- **course_id**: structural-mechanics-final
+- **strategy_revision_observed**: 1
+- **session_id**: session-beam-reactions-01
+- **output_id**: solution-beam-reactions-reference
+- **display_path**: progress/artifacts/solution-beam-reactions-reference.md
+- **answer_policy**: full_solution
+- **practice_status**: practice_only
+- **solution_status**: reference_verified
+- **residual_uncertainty**: unknown (legacy null)
+- **problem**:
+  - **id**: problem-beam-reactions-01
+  - **statement**: A simply supported 6 m beam carries a 12 kN downward point load 2 m from A; find reactions at A and B.
+  - **target_node_ids**:
+    - Item 1:
+      - beam-equilibrium
+    - Item 2:
+      - support-reactions
+  - **source_refs**:
+    - Item 1:
+      - **material_id**: problem-sheet
+      - **role**: problem
+      - **locator**: Beam Reaction Problem
+      - **claim**: The source provides span, load, location, supports, and sign convention.
+    - Item 2:
+      - **material_id**: equilibrium-note
+      - **role**: theory
+      - **locator**: Plane Equilibrium
+      - **claim**: Static equilibrium supplies force and moment equations.
+    - Item 3:
+      - **material_id**: answer-key
+      - **role**: answer
+      - **locator**: Reference Answer
+      - **claim**: The official reactions are 8 kN at A and 4 kN at B.
+- **nodes**:
+  - Item 1:
+    - **id**: span-l
+    - **label**: Span L
+    - **role**: given
+    - **mathematical_meaning**: L = 6 m
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: problem-sheet
+        - **role**: problem
+        - **locator**: sentence 1
+        - **claim**: Beam span is 6 m.
+  - Item 2:
+    - **id**: load-p
+    - **label**: Point load P
+    - **role**: given
+    - **mathematical_meaning**: P = 12 kN downward
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: problem-sheet
+        - **role**: problem
+        - **locator**: sentence 2
+        - **claim**: Point load is 12 kN downward.
+  - Item 3:
+    - **id**: distance-a
+    - **label**: Load distance a
+    - **role**: given
+    - **mathematical_meaning**: a = 2 m from A
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: problem-sheet
+        - **role**: problem
+        - **locator**: sentence 2
+        - **claim**: Load acts 2 m from A.
+  - Item 4:
+    - **id**: moment-equilibrium
+    - **label**: Moment equilibrium about A
+    - **role**: formula
+    - **mathematical_meaning**: sum M_A = 0
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: equilibrium-note
+        - **role**: theory
+        - **locator**: Plane Equilibrium
+        - **claim**: Moment sum about any point is zero.
+  - Item 5:
+    - **id**: vertical-equilibrium
+    - **label**: Vertical equilibrium
+    - **role**: formula
+    - **mathematical_meaning**: sum F_y = 0
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: equilibrium-note
+        - **role**: theory
+        - **locator**: Plane Equilibrium
+        - **claim**: Vertical force sum is zero.
+  - Item 6:
+    - **id**: reaction-b
+    - **label**: Reaction at B
+    - **role**: result
+    - **mathematical_meaning**: R_B = 4 kN upward
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: equilibrium-note
+        - **role**: theory
+        - **locator**: Plane Equilibrium
+        - **claim**: Moment equilibrium determines R_B.
+  - Item 7:
+    - **id**: reaction-a
+    - **label**: Reaction at A
+    - **role**: result
+    - **mathematical_meaning**: R_A = 8 kN upward
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: equilibrium-note
+        - **role**: theory
+        - **locator**: Plane Equilibrium
+        - **claim**: Vertical equilibrium determines R_A after R_B is known.
+  - Item 8:
+    - **id**: support-reactions-result
+    - **label**: Support reaction pair
+    - **role**: result
+    - **mathematical_meaning**: (R_A, R_B) = (8, 4) kN upward
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: answer-key
+        - **role**: answer
+        - **locator**: Reference Answer
+        - **claim**: The answer key gives the reaction pair.
+- **initial_node_ids**:
+  - Item 1:
+    - span-l
+  - Item 2:
+    - load-p
+  - Item 3:
+    - distance-a
+  - Item 4:
+    - moment-equilibrium
+  - Item 5:
+    - vertical-equilibrium
+- **steps**:
+  - Item 1:
+    - **id**: step-moment-about-a
+    - **input_node_ids**:
+      - Item 1:
+        - span-l
+      - Item 2:
+        - load-p
+      - Item 3:
+        - distance-a
+      - Item 4:
+        - moment-equilibrium
+    - **output_node_ids**:
+      - Item 1:
+        - reaction-b
+    - **trigger**: Two vertical reactions are unknown, so take moments about A to eliminate R_A.
+    - **operation**: Set the net moment about A to zero and solve for R_B.
+    - **equation_or_rule**: R_B(6) - 12(2) = 0, so R_B = 4 kN.
+    - **why**: The reaction at A has zero lever arm about A.
+    - **check**: The positive result means R_B acts upward under the stated convention.
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: equilibrium-note
+        - **role**: theory
+        - **locator**: Plane Equilibrium
+        - **claim**: Moment equilibrium and force times perpendicular distance.
+  - Item 2:
+    - **id**: step-vertical-force-balance
+    - **input_node_ids**:
+      - Item 1:
+        - load-p
+      - Item 2:
+        - reaction-b
+      - Item 3:
+        - vertical-equilibrium
+    - **output_node_ids**:
+      - Item 1:
+        - reaction-a
+    - **trigger**: R_B is known and one vertical reaction remains.
+    - **operation**: Set the vertical force sum to zero and solve for R_A.
+    - **equation_or_rule**: R_A + 4 - 12 = 0, so R_A = 8 kN.
+    - **why**: Static vertical acceleration is zero.
+    - **check**: R_A + R_B equals the 12 kN applied load.
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: equilibrium-note
+        - **role**: theory
+        - **locator**: Plane Equilibrium
+        - **claim**: Vertical force equilibrium.
+  - Item 3:
+    - **id**: step-report-reaction-pair
+    - **input_node_ids**:
+      - Item 1:
+        - reaction-a
+      - Item 2:
+        - reaction-b
+    - **output_node_ids**:
+      - Item 1:
+        - support-reactions-result
+    - **trigger**: Both reaction components are known.
+    - **operation**: Report magnitudes, directions, and units together.
+    - **equation_or_rule**: (R_A, R_B) = (8, 4) kN upward.
+    - **why**: The requested endpoint is the complete support reaction pair.
+    - **check**: Directions follow the positive sign convention and both values carry force units.
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: problem-sheet
+        - **role**: problem
+        - **locator**: final sentence
+        - **claim**: The problem asks for both vertical reactions.
+- **endpoint**:
+  - **node_id**: support-reactions-result
+  - **statement**: Determine both vertical support reactions with magnitude, direction, and units.
+  - **final_answer**: R_A = 8 kN upward; R_B = 4 kN upward.
+  - **units**: kN
+  - **acceptance_condition**: Both equilibrium equations are satisfied and the result matches the verified answer.
+- **verification_checks**:
+  - Item 1:
+    - **id**: check-reference-answer
+    - **type**: reference_match
+    - **procedure**: Compare both reactions with the verified answer key.
+    - **observed_result**: A: 8 kN upward and B: 4 kN upward match exactly.
+    - **passed**: true
+  - Item 2:
+    - **id**: check-equilibrium
+    - **type**: equilibrium
+    - **procedure**: Substitute the reactions into sum F_y and sum M_A.
+    - **observed_result**: 8 + 4 - 12 = 0 and 4(6) - 12(2) = 0.
+    - **passed**: true
+- **branch_conditions**:
+  - Item 1:
+    - If the load location changes, recompute R_B from moment equilibrium before using force balance.
+- **failure_boundaries**:
+  - Item 1:
+    - This planar chain does not cover horizontal loading, applied couples, or additional supports without adding the corresponding equilibrium unknowns.
+- **transfer_problem**:
+  - **prompt**: For the same 6 m beam and 12 kN point load, move the load to 4 m from A and determine both reactions.
+  - **changed_conditions**:
+    - Item 1:
+      - Load position changes from 2 m to 4 m from A.
+  - **answer_hidden**: true
+  - **target_node_ids**:
+    - Item 1:
+      - reaction-a
+    - Item 2:
+      - reaction-b
+    - Item 3:
+      - support-reactions-result

@@ -4,7 +4,6 @@
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 from pathlib import Path
 
@@ -19,10 +18,7 @@ SPECIALISTS = (
 
 
 def frontmatter_name(skill_file: Path) -> str | None:
-    try:
-        lines = skill_file.read_text(encoding="utf-8").splitlines()
-    except OSError:
-        return None
+    lines = skill_file.read_text(encoding="utf-8").splitlines()
     if not lines or lines[0].strip() != "---":
         return None
     for line in lines[1:]:
@@ -67,7 +63,13 @@ def inspect(roots: list[Path]) -> dict[str, object]:
 
         candidate = candidates[0]
         skill_file = candidate / "SKILL.md"
-        declared_name = frontmatter_name(skill_file)
+        try:
+            declared_name = frontmatter_name(skill_file)
+        except (OSError, UnicodeError) as exc:
+            reason = "invalid UTF-8" if isinstance(exc, UnicodeError) else "unreadable SKILL.md"
+            malformed.append({"name": name, "path": str(candidate),
+                              "declared_name": "", "reason": f"{reason}: {exc}"})
+            continue
         if declared_name != name:
             malformed.append(
                 {
@@ -115,7 +117,17 @@ def main() -> int:
 
     roots = args.search_root or default_roots()
     result = inspect(roots)
-    print(json.dumps(result, ensure_ascii=False, indent=2))
+    for root in result["search_roots"]:
+        print(f"Search root: {root}")
+    for item in result["installed"]:
+        print(f"AVAILABLE: {item['name']} -> {item['resolved_path']}")
+    for name in result["missing"]:
+        print(f"MISSING: {name}")
+    for item in result["malformed"]:
+        reason = item.get("reason", "missing or mismatched frontmatter name")
+        print(f"MALFORMED: {item['name']} at {item['path']}: {reason}")
+    for item in result["conflicts"]:
+        print(f"CONFLICT: {item['name']}: {', '.join(item['paths'])}")
     if args.strict and not result["complete"]:
         return 1
     return 0

@@ -1,65 +1,22 @@
-# One-Minute Mastery Snapshot
+# Quick confidence intake
 
-Use this workflow to capture current ability without blocking urgent study.
+Assess how well the evidence supports the initial diagnosis. Confidence belongs to a specific judgment, not to the learner's feeling of confidence or a separate ability score. The default is a quick decision with stated uncertainty, not a prerequisite exam.
 
-## Topic List
+Reuse recent relevant attempts, submitted graded work, and prior course records first. Assess capabilities, not a fixed “learner type”.
 
-Typically extract 8–15 topics from readable materials. In urgent mode, prefer the 8–12 topics with strongest exam-value or prerequisite evidence. If fewer verified topics exist, use only those and state that coverage is incomplete.
+If existing evidence is insufficient and self-report would materially help, extract a short list of decision-relevant topics from verified materials. Aim for roughly one minute of replies, without doing problems first, and offer:
+- 0: cannot recognize a start;
+- 1: understands a shown answer, cannot reproduce unaided;
+- 2: completes a standard task independently;
+- 3: completes an appropriate timed variant and explains conditions.
+Allow unknown and partial replies. Do not require the user to reconstruct the syllabus.
 
-Assign stable topic IDs matching `knowledge_graph.nodes[].id`. The Agent builds this list; the user does not reconstruct the syllabus.
+Preserve the evidence type, conditions, timestamp, uncertainty, and reference. A self-report stays a self-report. A grade without observable working supports only what the grade actually measures. State qualitative confidence and why: for example, supported by recent relevant work, based only on self-report, or insufficient evidence. Do not invent confidence percentages or infer confidence from ability level.
 
-## User Reply
+Before proposing a diagnostic probe, name the decision it could change and the different actions its possible outcomes would lead to. Use existing work or one brief clarification if that resolves it. Only when uncertainty could cause a consequential wrong choice and a short task can resolve it, use one targeted 2–5 minute answer-hidden probe. If both outcomes lead to the same review task, start that task directly. Do not chain probes to cover all unknown topics; later learning provides calibration. If the user declines, retain uncertainty and a provisional route.
 
-Use the user's language:
+“Diagnose everything” or “from beginning to end” requests coverage, not a 30–40 minute test. A broader ability assessment requires an explicit request for testing; it is not a condition for receiving priorities or beginning revision.
 
-```text
-用 0–3 回填，不需要先做题：
-0 = 完全空白／认不出方法
-1 = 看答案能懂，但闭卷不能复现
-2 = 能独立完成标准题／说出关键步骤
-3 = 能限时完成变式，并解释适用条件
+Example: “Energy equation: learned before but forgotten; exact ability unknown. Start by restoring equation setup.” This decision is actionable without a preliminary quiz. By contrast, skipping a high-value block based only on “I should know it” may warrant a targeted check before deciding to skip.
 
-T01 [主题]：
-T02 [主题]：
-
-直接回复：T01:2 T02:0
-最近相关小测、作业或模考结果可选填。
-```
-
-Reuse target score, exam date, and availability already provided. Do not ask for percentages.
-
-## Evidence Strength
-
-From strongest to weakest:
-
-1. recent timed or graded work on the same topic;
-2. closed-book micro-probe;
-3. behavior-anchored self-report;
-4. `unknown`.
-
-Record topic ID, level, evidence type, evidence reference, confidence, observation time, and notes. Do not upgrade self-report into demonstrated mastery.
-
-## Urgent Mode
-
-When three days or less remain or the user says every minute matters:
-
-- keep the reply task near one minute;
-- do not require a separate 20–30 minute diagnostic;
-- use the first real Session as ongoing calibration;
-- update later when performance contradicts self-report.
-
-## Selective Micro-Probe
-
-Use one 2–5 minute answer-hidden probe only when:
-
-1. the topic has high exam-value or prerequisite evidence;
-2. the user reports level `2` or `3`;
-3. that report would cause the topic to be deferred or skipped;
-4. a wrong report could cost meaningful marks;
-5. a short representative task can resolve the uncertainty.
-
-Do not probe every topic. If the user declines, keep lower confidence and a reversal condition.
-
-## Missing Response
-
-If the user skips the snapshot, mark mastery `unknown`, issue only a provisional route, and do not justify abandonment from missing mastery evidence.
+When a user asks to learn first, provide the minimum framework before practice. When they ask to practice first, begin with a suitable task. Later observations can correct the initial estimate.

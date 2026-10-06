@@ -1,7 +1,7 @@
 interface:
-  display_name: "exam-hacker-compress"
-  short_description: "Compile one STEM knowledge chain into a usable artifact."
-  default_prompt: "Use $exam-hacker-compress to compress one algorithmic STEM knowledge chain into a reproducible path with a verifiable endpoint."
+  display_name: "Exam Hacker · 板块复习"
+  short_description: "把当前板块讲成可执行的方法链，定位卡点并用短练习检查理解。"
+  default_prompt: "用 $exam-hacker-compress 帮我复习当前板块，讲清必要方法后让我练习。"
 
 policy:
   allow_implicit_invocation: true

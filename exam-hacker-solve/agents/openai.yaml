@@ -1,7 +1,7 @@
 interface:
-  display_name: "exam-hacker-solve"
-  short_description: "Solve one STEM problem as a reproducible checked chain."
-  default_prompt: "Use $exam-hacker-solve to give the complete answer to one algorithmic STEM problem as a reproducible, verified solution chain."
+  display_name: "Exam Hacker · 完整解题"
+  short_description: "完整解答一道理工科题目，解释每步依据、适用条件并核验最终结果。"
+  default_prompt: "用 $exam-hacker-solve 完整解答这道题，解释方法并检查答案。"
 
 policy:
   allow_implicit_invocation: true

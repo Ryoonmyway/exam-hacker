@@ -1,115 +1,48 @@
-# Evidence Contract
+# Evidence for exam decisions
 
-Apply this contract to every priority, frequency, scoring, or abandonment claim.
+Apply these rules to scope, frequency, scoring, priorities and abandonment. Record sources in `progress/materials.md` using ordinary Markdown.
 
-## Source Inventory
+## Source inventory
 
-Assign stable source IDs and record:
+For each source retain its stable ID, real file/link or user statement, kind, authority, inspected portion/method, usable anchors and gaps.
 
-| Source ID | File or statement | Type | Readability | Authority | Usable anchors | Notes |
-|---|---|---|---|---|---|---|
+- Verified: the relevant content was actually read and its anchor resolves.
+- User-confirmed: explicitly stated by the user, with that limitation.
+- Unreadable: relevant content could not be inspected after available fallback.
+- Missing: not supplied.
+- Inference: the agent's interpretation, distinguished from the underlying observation.
 
-States:
+Generated notes/exercises are not independent evidence of teacher emphasis, exam weights, or past frequency. File names do not prove content was read.
 
-- `verified`: relevant content was read through embedded text or rendered-page vision and its anchor resolves;
-- `user-confirmed`: the user explicitly supplied the fact;
-- `unreadable`: the source exists but relevant content could not be inspected;
-- `missing`: needed evidence was not provided.
+## PDF inspection
 
-Generated notes and planned outputs are not raw evidence. A filename alone does not make an image or scanned PDF verified.
+Run the readability helper for PDFs. When visual follow-up is indicated, read the scanned-PDF reference and inspect relevant rendered pages. OCR/contact sheets locate; they do not verify formulas, drawings, tables, or grading annotations.
 
-## Scanned And Mixed PDFs
+Record the method (embedded text, rendered-page vision, or both), actual 1-based inspected pages, targeted/full coverage, and OCR's role as navigation only. Every visual claim must resolve to an inspected page. Whole-document absence/frequency claims require full relevant coverage; a text-search miss proves neither.
 
-Empty or sparse text extraction is a detection signal, not proof that a PDF is unreadable. When rendering and multimodal inspection are available, use this order:
+Use the narrowest real source locator: page, slide, question, or heading plus identifying text. Do not invent locators, teacher statements, scoring rules, or source identities.
 
-1. detect text, image, and empty-page signals;
-2. use OCR or contact sheets only to locate candidate pages;
-3. render the relevant pages at readable resolution;
-4. visually inspect each page used by a claim;
-5. record a page-level inspection receipt.
+## Decision basis
 
-For scanned or mixed PDFs, `source_materials[].inspection` contains:
+Keep separate:
+- exam value: verified scope, rubric, papers or explicit user report;
+- mastery: work observed under stated conditions, or labeled self-report;
+- learnability: a reasoned estimate tied to prerequisite/complexity;
+- opportunity cost: confirmed capacity and estimated task time.
 
-```json
-{
-  "document_mode": "scan-likely",
-  "method": "vision",
-  "pages_total": 60,
-  "coverage": "targeted",
-  "pages_inspected": [1, 12, 27],
-  "ocr_role": "index_only"
-}
-```
+Attach evidence and uncertainty to a diagnosis. Source authority helps resolve conflict but does not erase it: course-specific official scope/rubric, instructor review material, verified papers/answers, textbook/homework, then informal notes.
 
-Allowed methods are `embedded_text`, `vision`, and `hybrid`. Coverage is `targeted` or `full`. OCR role is `none` or `index_only`; OCR output is never a verified source by itself.
+P0/P1/P2 describe current action priority, not a source's exam weight and not a direct conversion of mastery level.
 
-Every reference to a `vision` or `hybrid` source must contain a 1-based PDF page or slide anchor, and every referenced page must appear in `pages_inspected`. A targeted inspection supports claims only about those pages. A whole-document absence, distribution, or frequency claim requires `coverage: "full"` with every page inspected.
+## Abandonment gate
 
-## Evidence References
-
-Use the narrowest real locator:
-
-- `S01:p.12`;
-- `S02:slide 8`;
-- `S03:Q4`;
-- `S04:heading "Virtual Work" + keyword "unit load"`;
-- `U01:user-confirmed`.
-
-Never invent page numbers, questions, teacher emphasis, scoring rules, or source identities.
-
-## Claim Classes
-
-| Class | Meaning | Can independently justify abandonment? |
-|---|---|---|
-| `verified-source` | Readable course source with a resolvable anchor | Yes, subject to the gate |
-| `user-confirmed` | Explicit user statement | Only with its stated limitation |
-| `inference` | Agent-derived pattern or prerequisite judgment | No |
-| `unknown` | Missing, unreadable, or conflicting evidence | No |
-
-The mastery snapshot is user-confirmed evidence about current ability only. It is not evidence of exam frequency or score weight.
-
-## Claims Requiring Evidence
-
-Attach evidence to:
-
-- scope and score weights;
-- teacher emphasis and likely tested content;
-- high or low frequency;
-- scoring keywords and process marks;
-- must-win or abandonable status;
-- expected exam return used to rank topics.
-
-Absence from a limited sample is not low-frequency evidence.
-
-## Decision Record
-
-| Topic | Decision | Exam-value refs | Mastery evidence | Inference | Confidence | Risk if wrong | Reversal condition |
-|---|---|---|---|---|---|---|---|
-
-Allowed decisions: `must-win`, `high-priority`, `provisional`, `defer`, `strategic-abandonment`.
-
-## Strategic-Abandonment Gate
-
-Use `strategic-abandonment` only when all conditions hold:
-
-1. Capacity cannot cover every candidate topic.
-2. Retained topics have stronger evidence-backed return or prerequisite value.
-3. The abandoned topic has direct exclusion or low-weight evidence, or the user explicitly accepts the documented gap.
-4. The risk if wrong is stated.
+Strategic abandonment requires all of:
+1. Capacity cannot cover candidate work.
+2. Retained work has stronger evidence-backed relevance or prerequisite value.
+3. The omitted topic has direct exclusion/low-weight evidence, or the user explicitly accepts the documented evidence gap.
+4. Downside if wrong is stated.
 5. A concrete reversal condition is stated.
 
-If any condition fails, use `provisional` or `defer`.
+Otherwise use provisional deferral. Missing evidence is not low value. An unknown ability is not proof the user can safely skip.
 
-## Conflicts And Completion
-
-Show source conflicts. Prefer course-specific official scope or rubric, then instructor review material, then verified papers and answers, then textbook or homework, then senior notes; authority order does not erase unresolved conflict.
-
-Before finishing:
-
-- every source ID resolves or is explicitly user-confirmed;
-- high-stakes claims have evidence references;
-- inference is visible;
-- exam value and mastery remain separate;
-- every abandonment passes all five conditions;
-- unreadable and missing sources remain visible gaps.
-- every vision-backed claim resolves to a visually inspected page, and targeted coverage is not presented as a full-document audit.
+Before delivering a decision, check source references, inspected coverage, exam/mastery separation, visible uncertainty, and any abandonment gate.

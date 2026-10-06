@@ -1,0 +1,620 @@
+# Imported legacy history
+
+Historical snapshot only; current decisions live in ../progress.md.
+
+## progress/strategy-r2.json
+
+- **schema_version**: 2
+- **course**:
+  - **id**: structural-mechanics-final
+  - **name**: 结构力学期末
+  - **language**: zh
+  - **subject_type**: math_logic
+  - **target_score**: 75
+- **planning_context**:
+  - **exam_date**: 2026-09-03
+  - **strategy_created_at**: 2026-08-31T10:00:00+08:00
+  - **timezone**: Asia/Shanghai
+  - **exam_date_source**: user_confirmed
+  - **availability**:
+    - **hours_per_day**: 3.3333333333
+    - **total_minutes**: 600
+    - **source**: user_confirmed
+- **capacity_summary**:
+  - **available_minutes_at_generation**: 600
+  - **session_minutes**: 390
+  - **deficit_minutes**: 0
+- **source_outline**:
+  - **label**: 结构力学生存大纲
+  - **path**: progress/00_survival-outline.md
+- **source_materials**:
+  - Item 1:
+    - **id**: review-sheet
+    - **label**: Structural Mechanics Final Review Sheet
+    - **kind**: review_sheet
+    - **provenance**: user_provided
+    - **availability**: available
+    - **readability**: verified
+    - **path**: reference/review-sheet.md
+- **priorities**:
+  - Item 1:
+    - **id**: priority-force-method
+    - **rank**: 1
+    - **title**: 力法
+    - **level**: must_win
+    - **reason**: 复习单明确占 30 分且当前自报完全空白
+    - **knowledge_node_ids**:
+      - Item 1:
+        - force-method
+    - **evidence_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: Force method bullet
+        - **claim**: 力法占 30 分
+  - Item 2:
+    - **id**: priority-displacement-calculation
+    - **rank**: 2
+    - **title**: 位移计算
+    - **level**: must_win
+    - **reason**: 复习单明确占 25 分且当前只能看答案理解
+    - **knowledge_node_ids**:
+      - Item 1:
+        - displacement-calculation
+    - **evidence_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: Displacement calculation bullet
+        - **claim**: 位移计算占 25 分
+  - Item 3:
+    - **id**: priority-static-beam
+    - **rank**: 3
+    - **title**: 静定梁内力
+    - **level**: supporting
+    - **reason**: 复习单明确占 20 分且用户自报可以完成标准题
+    - **knowledge_node_ids**:
+      - Item 1:
+        - static-beam-internal-forces
+    - **evidence_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: Static beam bullet
+        - **claim**: 静定梁内力占 20 分
+  - Item 4:
+    - **id**: priority-displacement-method
+    - **rank**: 4
+    - **title**: 位移法
+    - **level**: supporting
+    - **reason**: 复习单明确占 25 分但只有自报熟练，暂不直接跳过
+    - **knowledge_node_ids**:
+      - Item 1:
+        - displacement-method
+    - **evidence_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: Displacement method bullet
+        - **claim**: 位移法占 25 分
+- **knowledge_graph**:
+  - **nodes**:
+    - Item 1:
+      - **id**: static-beam-internal-forces
+      - **label**: 静定梁内力
+      - **type**: method
+      - **mastery**: supporting
+      - **source_refs**:
+        - Item 1:
+          - **material_id**: review-sheet
+          - **locator**: Static beam bullet
+          - **claim**: 考试范围与分值
+    - Item 2:
+      - **id**: displacement-calculation
+      - **label**: 位移计算
+      - **type**: method
+      - **mastery**: must_know
+      - **source_refs**:
+        - Item 1:
+          - **material_id**: review-sheet
+          - **locator**: Displacement calculation bullet
+          - **claim**: 考试范围与分值
+    - Item 3:
+      - **id**: force-method
+      - **label**: 力法
+      - **type**: method
+      - **mastery**: must_know
+      - **source_refs**:
+        - Item 1:
+          - **material_id**: review-sheet
+          - **locator**: Force method bullet and final paragraph
+          - **claim**: 考试范围、分值与方法骨架
+    - Item 4:
+      - **id**: displacement-method
+      - **label**: 位移法
+      - **type**: method
+      - **mastery**: supporting
+      - **source_refs**:
+        - Item 1:
+          - **material_id**: review-sheet
+          - **locator**: Displacement method bullet
+          - **claim**: 考试范围与分值
+  - **edges**:
+    - Item 1:
+      - **from**: static-beam-internal-forces
+      - **to**: force-method
+      - **relation**: formula_chain
+- **action_list**:
+  - Item 1:
+    - **id**: session-force-method-01
+    - **kind**: study
+    - **state**: completed
+    - **phase**: 抢占高价值空白
+    - **title**: 力法启动链
+    - **duration_minutes**: 120
+    - **objective**: 能识别超静定次数并写出兼容方程骨架
+    - **success_criteria**: 闭卷完成一题标准力法题的建模与兼容方程
+    - **priority_id**: priority-force-method
+    - **knowledge_node_ids**:
+      - Item 1:
+        - force-method
+    - **depends_on**:
+      - (empty list)
+    - **input_material_ids**:
+      - Item 1:
+        - review-sheet
+    - **input_artifact_ids**:
+      - (empty list)
+    - **expected_outputs**:
+      - Item 1:
+        - **id**: evidence-force-method-01
+        - **label**: 力法标准题表现证据
+        - **type**: practice_evidence
+        - **status**: available
+        - **path**: progress/mastery-evidence.jsonl
+  - Item 2:
+    - **id**: session-force-method-repair
+    - **kind**: drill
+    - **state**: active
+    - **phase**: 修补暴露缺口
+    - **title**: 力法兼容方程定点修复
+    - **duration_minutes**: 90
+    - **objective**: 不借助答案，从基本体系独立写出兼容方程
+    - **success_criteria**: 闭卷完成一题并正确写出未知力、位移条件和兼容方程，关键三项全部命中
+    - **priority_id**: priority-force-method
+    - **knowledge_node_ids**:
+      - Item 1:
+        - force-method
+    - **depends_on**:
+      - Item 1:
+        - session-force-method-01
+    - **input_material_ids**:
+      - Item 1:
+        - review-sheet
+    - **input_artifact_ids**:
+      - Item 1:
+        - event-force-method-001
+    - **expected_outputs**:
+      - Item 1:
+        - **id**: evidence-force-method-repair
+        - **label**: 力法兼容方程修复证据
+        - **type**: practice_evidence
+        - **status**: planned
+  - Item 3:
+    - **id**: session-displacement-01
+    - **kind**: drill
+    - **state**: queued
+    - **phase**: 补齐第二得分链
+    - **title**: 位移计算标准题
+    - **duration_minutes**: 120
+    - **objective**: 闭卷完成标准位移计算
+    - **success_criteria**: 两道标准题至少独立完成一道
+    - **priority_id**: priority-displacement-calculation
+    - **knowledge_node_ids**:
+      - Item 1:
+        - displacement-calculation
+    - **depends_on**:
+      - (empty list)
+    - **input_material_ids**:
+      - Item 1:
+        - review-sheet
+    - **input_artifact_ids**:
+      - (empty list)
+    - **expected_outputs**:
+      - Item 1:
+        - **id**: evidence-displacement-01
+        - **label**: 位移计算表现证据
+        - **type**: practice_evidence
+        - **status**: planned
+  - Item 4:
+    - **id**: session-static-beam-check
+    - **kind**: micro_probe
+    - **state**: queued
+    - **phase**: 验证已会内容
+    - **title**: 静定梁快速校准
+    - **duration_minutes**: 60
+    - **objective**: 验证自报等级 2 是否可靠
+    - **success_criteria**: 限时完成一题标准内力计算
+    - **priority_id**: priority-static-beam
+    - **knowledge_node_ids**:
+      - Item 1:
+        - static-beam-internal-forces
+    - **depends_on**:
+      - (empty list)
+    - **input_material_ids**:
+      - Item 1:
+        - review-sheet
+    - **input_artifact_ids**:
+      - (empty list)
+    - **expected_outputs**:
+      - Item 1:
+        - **id**: evidence-static-beam-check
+        - **label**: 静定梁校准证据
+        - **type**: practice_evidence
+        - **status**: planned
+- **abandon**:
+  - (empty list)
+- **material_gaps**:
+  - (empty list)
+- **mastery_snapshot**:
+  - Item 1:
+    - **topic_id**: static-beam-internal-forces
+    - **level**: 2
+    - **evidence_type**: self_report
+    - **evidence_ref**: U01:user-confirmed
+    - **confidence**: medium
+    - **observed_at**: 2026-08-31T10:00:00+08:00
+    - **notes**: 能独立完成标准题
+  - Item 2:
+    - **topic_id**: displacement-calculation
+    - **level**: 1
+    - **evidence_type**: self_report
+    - **evidence_ref**: U01:user-confirmed
+    - **confidence**: medium
+    - **observed_at**: 2026-08-31T10:00:00+08:00
+    - **notes**: 看答案能懂，闭卷不能复现
+  - Item 3:
+    - **topic_id**: force-method
+    - **level**: 1
+    - **evidence_type**: drill
+    - **evidence_ref**: event-force-method-001
+    - **confidence**: high
+    - **observed_at**: 2026-08-31T10:45:00+08:00
+    - **notes**: 首轮训练得 3/10；能识别力法，但不能独立写出兼容方程
+  - Item 4:
+    - **topic_id**: displacement-method
+    - **level**: 3
+    - **evidence_type**: self_report
+    - **evidence_ref**: U01:user-confirmed
+    - **confidence**: medium
+    - **observed_at**: 2026-08-31T10:00:00+08:00
+    - **notes**: 自报能限时完成变式，尚无实作证据
+- **loop_state**:
+  - **contract_version**: exam-hacker-loop/v1
+  - **strategy_revision**: 2
+  - **status**: active
+  - **next_session_ids**:
+    - Item 1:
+      - session-force-method-repair
+  - **last_evidence_event_id**: event-force-method-001
+  - **updated_at**: 2026-08-31T11:00:00+08:00
+- **revision_log**:
+  - Item 1:
+    - **revision**: 1
+    - **updated_at**: 2026-08-31T10:00:00+08:00
+    - **reason**: initial_triage
+    - **consumed_event_ids**:
+      - (empty list)
+    - **changes**:
+      - Item 1:
+        - Created evidence-backed priorities, mastery snapshot, and first three Sessions.
+  - Item 2:
+    - **revision**: 2
+    - **updated_at**: 2026-08-31T11:00:00+08:00
+    - **reason**: drill_evidence
+    - **consumed_event_ids**:
+      - Item 1:
+        - event-force-method-001
+    - **changes**:
+      - Item 1:
+        - Marked session-force-method-01 completed.
+      - Item 2:
+        - Raised force-method mastery from 0 to 1 using drill evidence.
+      - Item 3:
+        - Inserted a 90-minute compatibility-equation repair Session as the only next action.
+
+## progress/strategy-r1.json
+
+- **schema_version**: 2
+- **course**:
+  - **id**: structural-mechanics-final
+  - **name**: 结构力学期末
+  - **language**: zh
+  - **subject_type**: math_logic
+  - **target_score**: 75
+- **planning_context**:
+  - **exam_date**: 2026-09-03
+  - **strategy_created_at**: 2026-08-31T10:00:00+08:00
+  - **timezone**: Asia/Shanghai
+  - **exam_date_source**: user_confirmed
+  - **availability**:
+    - **hours_per_day**: 3.3333333333
+    - **total_minutes**: 600
+    - **source**: user_confirmed
+- **capacity_summary**:
+  - **available_minutes_at_generation**: 600
+  - **session_minutes**: 300
+  - **deficit_minutes**: 0
+- **source_outline**:
+  - **label**: 结构力学生存大纲
+  - **path**: progress/00_survival-outline.md
+- **source_materials**:
+  - Item 1:
+    - **id**: review-sheet
+    - **label**: Structural Mechanics Final Review Sheet
+    - **kind**: review_sheet
+    - **provenance**: user_provided
+    - **availability**: available
+    - **readability**: verified
+    - **path**: reference/review-sheet.md
+- **priorities**:
+  - Item 1:
+    - **id**: priority-force-method
+    - **rank**: 1
+    - **title**: 力法
+    - **level**: must_win
+    - **reason**: 复习单明确占 30 分且当前自报完全空白
+    - **knowledge_node_ids**:
+      - Item 1:
+        - force-method
+    - **evidence_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: Force method bullet
+        - **claim**: 力法占 30 分
+  - Item 2:
+    - **id**: priority-displacement-calculation
+    - **rank**: 2
+    - **title**: 位移计算
+    - **level**: must_win
+    - **reason**: 复习单明确占 25 分且当前只能看答案理解
+    - **knowledge_node_ids**:
+      - Item 1:
+        - displacement-calculation
+    - **evidence_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: Displacement calculation bullet
+        - **claim**: 位移计算占 25 分
+  - Item 3:
+    - **id**: priority-static-beam
+    - **rank**: 3
+    - **title**: 静定梁内力
+    - **level**: supporting
+    - **reason**: 复习单明确占 20 分且用户自报可以完成标准题
+    - **knowledge_node_ids**:
+      - Item 1:
+        - static-beam-internal-forces
+    - **evidence_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: Static beam bullet
+        - **claim**: 静定梁内力占 20 分
+  - Item 4:
+    - **id**: priority-displacement-method
+    - **rank**: 4
+    - **title**: 位移法
+    - **level**: supporting
+    - **reason**: 复习单明确占 25 分但只有自报熟练，暂不直接跳过
+    - **knowledge_node_ids**:
+      - Item 1:
+        - displacement-method
+    - **evidence_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: Displacement method bullet
+        - **claim**: 位移法占 25 分
+- **knowledge_graph**:
+  - **nodes**:
+    - Item 1:
+      - **id**: static-beam-internal-forces
+      - **label**: 静定梁内力
+      - **type**: method
+      - **mastery**: supporting
+      - **source_refs**:
+        - Item 1:
+          - **material_id**: review-sheet
+          - **locator**: Static beam bullet
+          - **claim**: 考试范围与分值
+    - Item 2:
+      - **id**: displacement-calculation
+      - **label**: 位移计算
+      - **type**: method
+      - **mastery**: must_know
+      - **source_refs**:
+        - Item 1:
+          - **material_id**: review-sheet
+          - **locator**: Displacement calculation bullet
+          - **claim**: 考试范围与分值
+    - Item 3:
+      - **id**: force-method
+      - **label**: 力法
+      - **type**: method
+      - **mastery**: must_know
+      - **source_refs**:
+        - Item 1:
+          - **material_id**: review-sheet
+          - **locator**: Force method bullet and final paragraph
+          - **claim**: 考试范围、分值与方法骨架
+    - Item 4:
+      - **id**: displacement-method
+      - **label**: 位移法
+      - **type**: method
+      - **mastery**: supporting
+      - **source_refs**:
+        - Item 1:
+          - **material_id**: review-sheet
+          - **locator**: Displacement method bullet
+          - **claim**: 考试范围与分值
+  - **edges**:
+    - Item 1:
+      - **from**: static-beam-internal-forces
+      - **to**: force-method
+      - **relation**: formula_chain
+- **action_list**:
+  - Item 1:
+    - **id**: session-force-method-01
+    - **kind**: study
+    - **state**: active
+    - **phase**: 抢占高价值空白
+    - **title**: 力法启动链
+    - **duration_minutes**: 120
+    - **objective**: 能识别超静定次数并写出兼容方程骨架
+    - **success_criteria**: 闭卷完成一题标准力法题的建模与兼容方程
+    - **priority_id**: priority-force-method
+    - **knowledge_node_ids**:
+      - Item 1:
+        - force-method
+    - **depends_on**:
+      - (empty list)
+    - **input_material_ids**:
+      - Item 1:
+        - review-sheet
+    - **input_artifact_ids**:
+      - (empty list)
+    - **expected_outputs**:
+      - Item 1:
+        - **id**: evidence-force-method-01
+        - **label**: 力法标准题表现证据
+        - **type**: practice_evidence
+        - **status**: planned
+  - Item 2:
+    - **id**: session-displacement-01
+    - **kind**: drill
+    - **state**: queued
+    - **phase**: 补齐第二得分链
+    - **title**: 位移计算标准题
+    - **duration_minutes**: 120
+    - **objective**: 闭卷完成标准位移计算
+    - **success_criteria**: 两道标准题至少独立完成一道
+    - **priority_id**: priority-displacement-calculation
+    - **knowledge_node_ids**:
+      - Item 1:
+        - displacement-calculation
+    - **depends_on**:
+      - (empty list)
+    - **input_material_ids**:
+      - Item 1:
+        - review-sheet
+    - **input_artifact_ids**:
+      - (empty list)
+    - **expected_outputs**:
+      - Item 1:
+        - **id**: evidence-displacement-01
+        - **label**: 位移计算表现证据
+        - **type**: practice_evidence
+        - **status**: planned
+  - Item 3:
+    - **id**: session-static-beam-check
+    - **kind**: micro_probe
+    - **state**: queued
+    - **phase**: 验证已会内容
+    - **title**: 静定梁快速校准
+    - **duration_minutes**: 60
+    - **objective**: 验证自报等级 2 是否可靠
+    - **success_criteria**: 限时完成一题标准内力计算
+    - **priority_id**: priority-static-beam
+    - **knowledge_node_ids**:
+      - Item 1:
+        - static-beam-internal-forces
+    - **depends_on**:
+      - (empty list)
+    - **input_material_ids**:
+      - Item 1:
+        - review-sheet
+    - **input_artifact_ids**:
+      - (empty list)
+    - **expected_outputs**:
+      - Item 1:
+        - **id**: evidence-static-beam-check
+        - **label**: 静定梁校准证据
+        - **type**: practice_evidence
+        - **status**: planned
+- **abandon**:
+  - (empty list)
+- **material_gaps**:
+  - (empty list)
+- **mastery_snapshot**:
+  - Item 1:
+    - **topic_id**: static-beam-internal-forces
+    - **level**: 2
+    - **evidence_type**: self_report
+    - **evidence_ref**: U01:user-confirmed
+    - **confidence**: medium
+    - **observed_at**: 2026-08-31T10:00:00+08:00
+    - **notes**: 能独立完成标准题
+  - Item 2:
+    - **topic_id**: displacement-calculation
+    - **level**: 1
+    - **evidence_type**: self_report
+    - **evidence_ref**: U01:user-confirmed
+    - **confidence**: medium
+    - **observed_at**: 2026-08-31T10:00:00+08:00
+    - **notes**: 看答案能懂，闭卷不能复现
+  - Item 3:
+    - **topic_id**: force-method
+    - **level**: 0
+    - **evidence_type**: self_report
+    - **evidence_ref**: U01:user-confirmed
+    - **confidence**: medium
+    - **observed_at**: 2026-08-31T10:00:00+08:00
+    - **notes**: 完全空白
+  - Item 4:
+    - **topic_id**: displacement-method
+    - **level**: 3
+    - **evidence_type**: self_report
+    - **evidence_ref**: U01:user-confirmed
+    - **confidence**: medium
+    - **observed_at**: 2026-08-31T10:00:00+08:00
+    - **notes**: 自报能限时完成变式，尚无实作证据
+- **loop_state**:
+  - **contract_version**: exam-hacker-loop/v1
+  - **strategy_revision**: 1
+  - **status**: active
+  - **next_session_ids**:
+    - Item 1:
+      - session-force-method-01
+  - **last_evidence_event_id**: unknown (legacy null)
+  - **updated_at**: 2026-08-31T10:00:00+08:00
+- **revision_log**:
+  - Item 1:
+    - **revision**: 1
+    - **updated_at**: 2026-08-31T10:00:00+08:00
+    - **reason**: initial_triage
+    - **consumed_event_ids**:
+      - (empty list)
+    - **changes**:
+      - Item 1:
+        - Created evidence-backed priorities, mastery snapshot, and first three Sessions.
+
+## progress/event-force-method-001.json
+
+- **contract_version**: exam-hacker-loop/v1
+- **event_id**: event-force-method-001
+- **course_id**: structural-mechanics-final
+- **strategy_revision_observed**: 1
+- **observed_at**: 2026-08-31T10:45:00+08:00
+- **source_skill**: exam-hacker-drill
+- **session_id**: session-force-method-01
+- **topic_id**: force-method
+- **evidence_type**: drill
+- **result**:
+  - **success**: false
+  - **level_observed**: 1
+  - **score_earned**: 3
+  - **score_possible**: 10
+  - **error_tags**:
+    - Item 1:
+      - compatibility-equation-missing
+  - **notes**: Recognized the force method but could not construct the compatibility equation unaided.
+- **source_refs**:
+  - Item 1:
+    - **material_id**: review-sheet
+    - **locator**: Force method bullet and final paragraph
+    - **claim**: The topic is in scope and requires a compatibility equation.

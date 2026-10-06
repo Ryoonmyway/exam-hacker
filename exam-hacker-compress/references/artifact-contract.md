@@ -1,62 +1,13 @@
-# Compression Artifact Contract
+# A useful compression note
 
-Contract version: `exam-hacker-compress/v1`.
+Use ordinary Markdown, mathematics, diagrams where useful, and real source links. Keep one authoritative note per learning unit; refine it rather than generate a synchronized JSON copy.
 
-The canonical artifact is UTF-8 JSON. It describes a source-grounded executable knowledge chain; Markdown is a display derived from the same data.
+Start with what the learner should be able to produce. Explain the chain from available givens to that endpoint. Steps must be reproducible: show their inputs, operation, result, reason, and an appropriate local check in readable prose or a table. Do not force a field-heavy format when a short derivation is clearer.
 
-## Identity And Binding
+Include the necessary applicability conditions, common failure boundaries, and omissions that matter. For example, a zero-displacement compatibility equation must not silently cover support settlement.
 
-Required top-level fields:
+Verify that each step uses known inputs or previous results and that the endpoint is actually reached. Check mathematical validity directly; formatting checks do not establish it. If the chain has a missing source-backed transition, identify it rather than write around it.
 
-- `contract_version`: `exam-hacker-compress/v1`;
-- `artifact_type`: `knowledge-chain-compression`;
-- stable `artifact_id` and `course_id`;
-- `strategy_revision_observed`, `session_id`, and `output_id`, each nullable only for standalone work;
-- relative `display_path` ending in `.md`;
-- non-empty `source_refs`.
+Practice lives in the linked practice record. A note may link to it, but must not expose its answers before the attempt. A generated or read note is preparation, not mastery evidence.
 
-When Strategy state is supplied, course, revision, Session, expected output, source IDs, and target topic IDs must resolve. The expected output type is `concept_compression`.
-
-## Scope
-
-`scope.mode` is `chain` or `node`.
-
-- Chain mode is the default, uses `explicit_node_problem: false`, and has at least two `target_node_ids`.
-- Node mode requires `explicit_node_problem: true` and exactly one target node.
-
-Both modes still preserve the minimum surrounding inputs and outputs needed to execute the chain.
-
-## Reproducible Chain
-
-`nodes` is a unique catalog. Each node requires ID, label, role, `minimum_recall`, and source references. Roles are `given`, `concept`, `formula`, `constraint`, `operation`, `checkpoint`, or `result`.
-
-`initial_node_ids` names information available before execution.
-
-Each ordered step requires:
-
-- stable `id`;
-- `input_node_ids` already available at that point;
-- one or more `output_node_ids` defined in the node catalog;
-- operation, reason, check, and source references.
-
-At least one output from every step must be new. After each step its outputs become available. The endpoint node must therefore be produced by the ordered chain, not merely mentioned.
-
-`endpoint` contains the final node ID, a user-facing statement, and a concrete verification method.
-
-## Loss And Retrieval
-
-`applicability.conditions` and `applicability.failure_boundaries` are non-empty.
-
-`compression_losses` records omitted material and `restore_when`. This prevents a short artifact from pretending to be universally sufficient.
-
-`retrieval_probes` contains two to five prompts. Every probe has a stable ID, `answer_hidden: true`, and one or more known target nodes. A probe is not mastery evidence.
-
-## Display Contract
-
-The Markdown display must contain:
-
-- the artifact ID;
-- the exact endpoint statement;
-- every ordered step ID.
-
-This is a minimum synchronization check, not proof that prose quality is good.
+Local repair is allowed from explicit feedback or sufficiently specific observed work. Explain the reason briefly; uncertain diagnoses remain provisional.
