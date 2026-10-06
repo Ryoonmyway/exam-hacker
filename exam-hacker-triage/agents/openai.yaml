@@ -1,7 +1,7 @@
 interface:
-  display_name: "exam-hacker-triage"
-  short_description: "Build evidence-backed priorities and first Sessions."
-  default_prompt: "Use $exam-hacker-triage to create my initial exam strategy and first Sessions."
+  display_name: "Exam Hacker · 诊断与优先级"
+  short_description: "结合考试资料、掌握证据和可用时间，判断先补什么并开始首项任务。"
+  default_prompt: "用 $exam-hacker-triage 检查我的课程资料和约束，给出优先级并直接开始。"
 
 policy:
   allow_implicit_invocation: true

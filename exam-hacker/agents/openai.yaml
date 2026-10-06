@@ -1,7 +1,7 @@
 interface:
-  display_name: "exam-hacker"
-  short_description: "Route one exam request to one focused specialist."
-  default_prompt: "Use $exam-hacker to select and run the next focused Exam Hacker specialist."
+  display_name: "Exam Hacker · 复习入口"
+  short_description: "开始或续接复习，自动衔接讲解、练习与反馈，直接给出下一项学习任务。"
+  default_prompt: "用 $exam-hacker 根据当前课程资料和进度，直接开始下一项学习任务。"
 
 policy:
   allow_implicit_invocation: true

@@ -1,7 +1,7 @@
 interface:
-  display_name: "exam-hacker-replan"
-  short_description: "Revise exam strategy from new performance evidence."
-  default_prompt: "Use $exam-hacker-replan to consume my new evidence and choose the next Sessions."
+  display_name: "Exam Hacker · 调整安排"
+  short_description: "根据新表现或剩余时间调整复习优先级，保存原因并直接给出下一任务。"
+  default_prompt: "用 $exam-hacker-replan 根据刚才的反馈更新安排，并直接开始下一项任务。"
 
 policy:
   allow_implicit_invocation: true

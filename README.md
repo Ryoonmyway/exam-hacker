@@ -2,154 +2,106 @@
 
 English | [简体中文](README.zh-CN.md)
 
-An evidence-driven final-exam survival Skill collection for algorithmic STEM courses.
+Repository: [Ryoonmyway/exam-hacker](https://github.com/Ryoonmyway/exam-hacker)
 
-Exam Hacker is not a summary generator and does not pretend that every topic deserves equal attention. It turns real course materials, the user's current mastery, and the remaining time into a small executable study loop. Priorities, abandonment, grading, and replanning must all resolve to evidence.
+An exam-review skill collection for checkable STEM calculations, derivations, and proofs. State your goal, submit work, or say “continue”; the agent recovers progress and proceeds to the next concrete learner action.
 
-## Why It Is A Collection
+## Choose by need
 
-The former monolithic Skill mixed six different decisions. The current version gives each state transition one owner:
-
-| Skill | Responsibility |
+| What you need | Direct entry |
 |---|---|
-| `exam-hacker` | Read state, choose exactly one specialist, and hand off known inputs |
-| `exam-hacker-triage` | Audit materials, collect a one-minute mastery snapshot, create strategy revision 1, and select the first 1–3 Sessions |
-| `exam-hacker-compress` | Compress one algorithmic knowledge chain or one explicitly named failure node |
-| `exam-hacker-solve` | Produce one complete, reproducible worked solution or reverse-engineered solution chain |
-| `exam-hacker-drill` | Run one answer-hidden Session, grade observed work, and append mastery evidence |
-| `exam-hacker-replan` | Consume new evidence or changed availability, create the next strategy revision, and choose the next 1–3 Sessions |
+| Start, decide where to begin, or resume a new chat | `$exam-hacker` |
+| Diagnose priorities and realistic capacity | `$exam-hacker-triage` |
+| Review a block's method or repair a specific gap | `$exam-hacker-compress` |
+| Read a complete checked worked solution | `$exam-hacker-solve` |
+| Get exercises, submit answers, or verify understanding | `$exam-hacker-drill` |
+| Adjust future work after evidence/time changes | `$exam-hacker-replan` |
 
-```text
-triage -> [compress | solve] -> drill -> replan -> drill
-```
+You do not need to manage specialist handoffs. Each turn ends at a real task with an effort estimate, expected submission, and pass condition. Explicit requests to explain only, solve only, or stop are respected.
 
-`compress` and `solve` are optional preparation operators. Only `drill` can turn the user's observed performance into mastery evidence, and only `replan` can revise an existing strategy.
+## Learning flow
 
-## Installation
+Initial assessment → current block → explanation where needed → practice → record feedback → adjust where needed → next task.
 
-### Complete collection for all detected Agents
+Use existing performance instead of forcing a diagnostic before every block. P0 blocks the current goal; P1 is a consequential present loss; P2 can wait. Priority depends on goal relevance, evidence, prerequisites, and time, not simply an ability score.
 
-Node.js and `npx` are required.
+“I understand” is saved as self-report, not verified mastery. Suitable original, adapted, and checked generated exercises are supported; no supplied question bank is required. A visible worked example requires a fresh task for later independent verification.
 
-```bash
-npx -y skills add Wh1te358/skills-by-Wh1te -g --all
-```
-
-This repository currently contains the six Exam Hacker Skills above. `--all` is intentional: installing only `exam-hacker` leaves the router without its five required specialists.
-
-### Codex only
-
-Use the explicit list if you only want a global Codex installation, or if this repository later contains unrelated Skills:
-
-```bash
-npx -y skills add Wh1te358/skills-by-Wh1te -g -y --agent codex --skill exam-hacker exam-hacker-triage exam-hacker-compress exam-hacker-solve exam-hacker-drill exam-hacker-replan
-```
-
-Preview what the installer detects without installing:
-
-```bash
-npx -y skills add Wh1te358/skills-by-Wh1te --list
-```
-
-### Codex Python fallback
-
-If `npx` is unavailable but Codex's built-in Skill installer exists, install all six paths in one command. Do not install only the router.
-
-```bash
-python "$HOME/.codex/skills/.system/skill-installer/scripts/install-skill-from-github.py" --repo "Wh1te358/skills-by-Wh1te" --ref "codex/exam-hacker-skill" --path exam-hacker exam-hacker-triage exam-hacker-compress exam-hacker-solve exam-hacker-drill exam-hacker-replan
-```
-
-### From a local clone
-
-Run this from the repository root:
-
-```bash
-npx -y skills add . -g --all
-```
-
-Restart or open a new Agent session after installation. Then invoke:
-
-```text
-$exam-hacker
-```
-
-The router performs a strict installed-specialist check before it reads course state. It will report missing, malformed, or conflicting installations instead of silently falling back to the retired monolith.
-
-## Recommended Course Workspace
-
-Keep raw evidence separate from generated state:
+## Markdown is the learning record
 
 ```text
 course-root/
   reference/
-    textbook/
-    slides/
-    review-sheet/
-    homework/
-    past-papers/
-    answer-keys/
   progress/
-    00_survival-outline.md
-    strategy.json
-    mastery-evidence.jsonl
-    artifacts/
-    drills/
-    history/
+    progress.md
+    materials.md
+    notes/<block-or-problem>.md
+    practice/<task-id>.md
 ```
 
-- `reference/` contains only pre-existing source material.
-- `progress/` contains Agent-generated strategy, artifacts, drills, and append-only evidence.
-- A filename or existing PDF is not proof that the Agent has read it.
+Create only needed files. Maintain one authoritative copy per item and link to it. No learning JSON/JSONL, hidden JSON blocks, or synchronized machine/display copies. Platform YAML configuration is separate.
 
-## Usage
+Save the exact pending question and exposure conditions before waiting. Record feedback as it arrives, preserve attempts, and append corrections. Keep the progress entry concise and read linked history only when needed.
 
-Initial triage:
+In a new chat in the same course folder:
+```text
+Use $exam-hacker to continue this course. Read progress/progress.md and resume the pending task.
+```
+Include the absolute course path if the new chat is elsewhere. Recovery requires access to those files; the skill does not automatically open chats.
+
+## Examples
 
 ```text
-$exam-hacker
-I have five days before my structural mechanics final, a target of 80, and 18 usable study hours. My materials are under reference/. Audit the evidence, ask me for the one-minute mastery snapshot, and give me only the first executable Sessions.
+Use $exam-hacker to start structural mechanics review. My exam date is ...,
+target is ..., and I can actually spend ... minutes. Materials are in reference/.
+Start the first useful learning task.
 ```
-
-Start the next Session:
 
 ```text
-$exam-hacker
-Start my next Session. Hide the answer until I submit my work.
+Use $exam-hacker-compress to review the force-method block.
+Use my existing work to focus the explanation, then let me practice.
 ```
-
-Solve one problem directly:
 
 ```text
-$exam-hacker-solve
-Solve this indeterminate-beam problem as a complete reproducible chain. Cite the supplied problem, theory, and answer-key anchors, and distinguish reference-verified steps from Agent-derived steps.
+Use $exam-hacker-drill to test compatibility conditions.
+I have course notes in reference/ but no question bank.
 ```
-
-Compress one chain:
 
 ```text
-$exam-hacker-compress
-Compress the force-method chain from redundancy selection to final internal forces. Keep every transition reproducible and end with an answer-hidden retrieval probe.
+Use $exam-hacker-solve to give the complete answer to this problem. Explanation only this time.
 ```
 
-## Evidence Rules
+## Install from a local checkout
 
-- No evidence-backed exam value means no confident priority or strategic abandonment.
-- Strategic abandonment requires direct evidence, insufficient capacity, a downside, and a reversal condition.
-- The mastery snapshot is a fast `0–3` behavior-anchored self-report, not a compulsory long diagnostic.
-- Exposed answers and worked examples are `practice_only`; they do not prove mastery.
-- Only observed, answer-hidden user performance may enter `mastery-evidence.jsonl`.
-- OCR and contact sheets may locate pages, but they are not authoritative evidence for formulas, diagrams, answers, or scoring annotations.
-- Scanned or image-only PDFs trigger rendered-page visual inspection. Claims are restricted to the exact pages inspected; targeted inspection cannot masquerade as a full-document audit.
+Get the code from the repository above, then run this from its local root directory (requires Node.js and npx):
+```bash
+npx -y skills add . -g --all
+```
 
-## Current Scope
+Start a new chat after installation. Install all six skills for the full workflow; specialists share record and continuation guidance in the entry skill. Only the currently needed capability is checked, so unrelated missing specialists do not block useful work.
 
-The current collection is optimized for calculation, derivation, proof, and other deterministic STEM chains. Whole-course A4 sheets, generic knowledge maps, broad question banks, and non-algorithmic memorization-course compression are intentionally outside this version rather than being weakly simulated inside the router.
+## Legacy import
 
-## Validation Included
+Follow [the migration reference](exam-hacker/references/migration.md) for legacy strategy.json and mastery-evidence.jsonl. Preview, then apply once. The helper verifies a recovery ZIP before removing the exact legacy input files; only Markdown is maintained afterward. Conflicting current/legacy records are reconciled, not overwritten.
 
-The repository includes:
+```text
+python <exam-hacker>/scripts/migrate_legacy.py <course-root>
+python <exam-hacker>/scripts/migrate_legacy.py <course-root> --apply
+```
 
-- structural-mechanics fixtures for triage, compression, solving, drilling, and replanning;
-- validators for strategy state, compression artifacts, solved-problem artifacts, mastery events, and replan transitions;
-- integration results for the closed loop;
-- a PDF readability detector that distinguishes text, mixed, scan-like, and no-readable-signal documents.
+## Evidence boundaries
+
+Exam scope, weights, and instructor emphasis need sources. Self-reported ability is not exam-value evidence. Strategic abandonment needs evidence, capacity tradeoffs, downside, and a reversal condition.
+
+Inspect rendered scanned pages; OCR only locates. Partial inspection cannot establish whole-document claims. Label generated exercises and agent-derived answers honestly; never fabricate official rubrics or process marks.
+
+The collection targets checkable algorithmic STEM work, not unconstrained essays.
+
+## Validation
+
+```text
+python exam-hacker/evals/test_learning_records.py
+python exam-hacker/scripts/check_learning_record.py <course-root>
+```
+
+These check import/rollback and concrete record invariants, not pedagogy or mathematical truth. See [behavior scenarios](exam-hacker/evals/cases.md) for behavioral evaluation and actual results.

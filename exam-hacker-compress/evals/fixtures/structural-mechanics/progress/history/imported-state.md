@@ -1,0 +1,390 @@
+# Imported legacy history
+
+Historical snapshot only; current decisions live in ../progress.md.
+
+## strategy.json
+
+- **course**:
+  - **id**: structural-mechanics-final
+- **loop_state**:
+  - **strategy_revision**: 1
+- **source_materials**:
+  - Item 1:
+    - **id**: review-sheet
+- **knowledge_graph**:
+  - **nodes**:
+    - Item 1:
+      - **id**: redundant-count
+    - Item 2:
+      - **id**: basic-system
+    - Item 3:
+      - **id**: unit-load-flexibility
+    - Item 4:
+      - **id**: compatibility-equation
+    - Item 5:
+      - **id**: redundant-force
+    - Item 6:
+      - **id**: final-internal-forces
+    - Item 7:
+      - **id**: released-displacement
+    - Item 8:
+      - **id**: support-condition
+- **action_list**:
+  - Item 1:
+    - **id**: session-force-method-01
+    - **knowledge_node_ids**:
+      - Item 1:
+        - redundant-count
+      - Item 2:
+        - basic-system
+      - Item 3:
+        - unit-load-flexibility
+      - Item 4:
+        - compatibility-equation
+      - Item 5:
+        - redundant-force
+      - Item 6:
+        - final-internal-forces
+      - Item 7:
+        - released-displacement
+      - Item 8:
+        - support-condition
+    - **expected_outputs**:
+      - Item 1:
+        - **id**: compression-force-method-chain
+        - **type**: concept_compression
+      - Item 2:
+        - **id**: compression-compatibility-equation
+        - **type**: concept_compression
+
+## progress/artifacts/compression-compatibility-equation.compress.json
+
+- **contract_version**: exam-hacker-compress/v1
+- **artifact_type**: knowledge-chain-compression
+- **artifact_id**: compression-compatibility-equation
+- **course_id**: structural-mechanics-final
+- **strategy_revision_observed**: 1
+- **session_id**: session-force-method-01
+- **output_id**: compression-compatibility-equation
+- **display_path**: progress/artifacts/compression-compatibility-equation.md
+- **scope**:
+  - **mode**: node
+  - **explicit_node_problem**: true
+  - **target_node_ids**:
+    - Item 1:
+      - compatibility-equation
+- **source_refs**:
+  - Item 1:
+    - **material_id**: review-sheet
+    - **locator**: paragraph 2
+    - **claim**: The source gives the zero-displacement compatibility equation.
+- **nodes**:
+  - Item 1:
+    - **id**: released-displacement
+    - **label**: 释放方向总位移项
+    - **role**: given
+    - **minimum_recall**: Delta_1P 与 delta_11 X_1 必须在同一释放方向。
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: paragraphs 1-2
+        - **claim**: Both displacement terms refer to the released direction.
+  - Item 2:
+    - **id**: support-condition
+    - **label**: 原支座位移条件
+    - **role**: given
+    - **minimum_recall**: 无沉降时该方向规定总位移为零。
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: paragraph 2
+        - **claim**: The released support displacement is zero in the stated case.
+  - Item 3:
+    - **id**: compatibility-equation
+    - **label**: 变形协调方程
+    - **role**: constraint
+    - **minimum_recall**: Delta_1P + delta_11 X_1 = 0。
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: paragraph 2
+        - **claim**: The compatibility equation is stated explicitly.
+- **initial_node_ids**:
+  - Item 1:
+    - released-displacement
+  - Item 2:
+    - support-condition
+- **steps**:
+  - Item 1:
+    - **id**: step-assemble-compatibility
+    - **input_node_ids**:
+      - Item 1:
+        - released-displacement
+      - Item 2:
+        - support-condition
+    - **output_node_ids**:
+      - Item 1:
+        - compatibility-equation
+    - **trigger**: 已知释放方向的荷载位移和单位未知力柔度，且原支座不沉降。
+    - **operation**: 把同方向位移相加并令总位移等于零。
+    - **why**: 恢复原约束后必须满足原结构的几何条件。
+    - **check**: 各项方向、符号和位移量纲一致。
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: paragraph 2
+        - **claim**: Assemble Delta_1P + delta_11 X_1 = 0.
+- **endpoint**:
+  - **node_id**: compatibility-equation
+  - **statement**: 写出与释放方向、符号约定和原支座位移条件一致的协调方程。
+  - **verification_method**: 检查每项均为同方向位移，并将无沉降条件代入右端为零。
+- **applicability**:
+  - **conditions**:
+    - Item 1:
+      - 原释放方向位移规定值为零。
+    - Item 2:
+      - Delta_1P 与 delta_11 使用同一方向约定。
+  - **failure_boundaries**:
+    - Item 1:
+      - 存在支座沉降时，右端应改为规定位移而不是零。
+- **compression_losses**:
+  - Item 1:
+    - **omitted**: 位移积分的具体求值过程。
+    - **restore_when**: 用户无法得到 Delta_1P 或 delta_11，而不只是不会组装方程时。
+- **retrieval_probes**:
+  - Item 1:
+    - **id**: probe-equation-trigger
+    - **prompt**: 给出 Delta_1P、delta_11 和零支座位移，闭卷写出协调方程。
+    - **answer_hidden**: true
+    - **target_node_ids**:
+      - Item 1:
+        - compatibility-equation
+  - Item 2:
+    - **id**: probe-settlement-branch
+    - **prompt**: 若支座沿释放方向沉降 Delta，说明协调方程哪一处改变。
+    - **answer_hidden**: true
+    - **target_node_ids**:
+      - Item 1:
+        - compatibility-equation
+
+## progress/artifacts/compression-force-method-chain.compress.json
+
+- **contract_version**: exam-hacker-compress/v1
+- **artifact_type**: knowledge-chain-compression
+- **artifact_id**: compression-force-method-chain
+- **course_id**: structural-mechanics-final
+- **strategy_revision_observed**: 1
+- **session_id**: session-force-method-01
+- **output_id**: compression-force-method-chain
+- **display_path**: progress/artifacts/compression-force-method-chain.md
+- **scope**:
+  - **mode**: chain
+  - **explicit_node_problem**: false
+  - **target_node_ids**:
+    - Item 1:
+      - redundant-count
+    - Item 2:
+      - basic-system
+    - Item 3:
+      - unit-load-flexibility
+    - Item 4:
+      - compatibility-equation
+    - Item 5:
+      - redundant-force
+    - Item 6:
+      - final-internal-forces
+- **source_refs**:
+  - Item 1:
+    - **material_id**: review-sheet
+    - **locator**: Force Method Review Sheet
+    - **claim**: The source defines the basic-system, compatibility, solution, and superposition chain.
+- **nodes**:
+  - Item 1:
+    - **id**: redundant-count
+    - **label**: 超静定次数
+    - **role**: given
+    - **minimum_recall**: 确定需要解除的多余约束数量。
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: paragraph 1
+        - **claim**: Remove one redundant for a one-degree indeterminate structure.
+  - Item 2:
+    - **id**: basic-system
+    - **label**: 基本体系
+    - **role**: operation
+    - **minimum_recall**: 解除一个多余约束并保留其未知力方向。
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: paragraph 1
+        - **claim**: Removing the redundant forms the basic system.
+  - Item 3:
+    - **id**: unit-load-flexibility
+    - **label**: 荷载位移与柔度系数
+    - **role**: formula
+    - **minimum_recall**: 计算 Delta_1P 与 delta_11。
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: paragraph 1
+        - **claim**: Compute the released displacement and unit-redundant flexibility coefficient.
+  - Item 4:
+    - **id**: compatibility-equation
+    - **label**: 变形协调方程
+    - **role**: constraint
+    - **minimum_recall**: 零支座位移时写成 Delta_1P + delta_11 X_1 = 0。
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: paragraph 2
+        - **claim**: The zero-displacement compatibility equation is given explicitly.
+  - Item 5:
+    - **id**: redundant-force
+    - **label**: 多余未知力
+    - **role**: result
+    - **minimum_recall**: 由协调方程求 X_1。
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: paragraph 2
+        - **claim**: Solve the compatibility equation for X_1.
+  - Item 6:
+    - **id**: final-internal-forces
+    - **label**: 最终内力
+    - **role**: result
+    - **minimum_recall**: 基本体系内力与 X_1 产生的内力叠加。
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: paragraph 2
+        - **claim**: Restore the redundant and superpose internal forces.
+- **initial_node_ids**:
+  - Item 1:
+    - redundant-count
+- **steps**:
+  - Item 1:
+    - **id**: step-release-redundant
+    - **input_node_ids**:
+      - Item 1:
+        - redundant-count
+    - **output_node_ids**:
+      - Item 1:
+        - basic-system
+    - **trigger**: 题目给出一次超静定结构。
+    - **operation**: 解除一个多余约束，指定 X_1 的正方向。
+    - **why**: 力法先把未知约束力转化为基本体系上的外加未知力。
+    - **check**: 解除数量等于超静定次数，基本体系稳定。
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: paragraph 1
+        - **claim**: Remove one redundant to form the basic system.
+  - Item 2:
+    - **id**: step-compute-flexibility
+    - **input_node_ids**:
+      - Item 1:
+        - basic-system
+    - **output_node_ids**:
+      - Item 1:
+        - unit-load-flexibility
+    - **trigger**: 基本体系和 X_1 方向已经确定。
+    - **operation**: 分别计算 Delta_1P 与 delta_11。
+    - **why**: 协调方程需要外荷载位移和单位未知力柔度。
+    - **check**: 两个位移量对应同一释放方向且符号约定一致。
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: paragraph 1
+        - **claim**: Compute released displacement and flexibility coefficient.
+  - Item 3:
+    - **id**: step-write-compatibility
+    - **input_node_ids**:
+      - Item 1:
+        - unit-load-flexibility
+    - **output_node_ids**:
+      - Item 1:
+        - compatibility-equation
+    - **trigger**: Delta_1P 与 delta_11 已知且原约束位移为零。
+    - **operation**: 写出 Delta_1P + delta_11 X_1 = 0。
+    - **why**: 恢复多余约束后，释放方向的总位移必须满足原约束。
+    - **check**: 方程每一项都是同方向位移，量纲一致。
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: paragraph 2
+        - **claim**: Compatibility equation for zero support displacement.
+  - Item 4:
+    - **id**: step-solve-redundant
+    - **input_node_ids**:
+      - Item 1:
+        - compatibility-equation
+    - **output_node_ids**:
+      - Item 1:
+        - redundant-force
+    - **trigger**: 协调方程已经闭合。
+    - **operation**: 解得 X_1 = -Delta_1P / delta_11。
+    - **why**: X_1 是恢复原约束所需的未知力。
+    - **check**: 把 X_1 回代后协调残差为零。
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: paragraph 2
+        - **claim**: Solve the equation for X_1 and substitute it back.
+  - Item 5:
+    - **id**: step-superpose-forces
+    - **input_node_ids**:
+      - Item 1:
+        - basic-system
+      - Item 2:
+        - redundant-force
+    - **output_node_ids**:
+      - Item 1:
+        - final-internal-forces
+    - **trigger**: X_1 已求出。
+    - **operation**: 叠加基本体系外荷载内力与 X_1 产生的内力。
+    - **why**: 线弹性条件下可以恢复原结构内力。
+    - **check**: 恢复后的结构满足整体平衡。
+    - **source_refs**:
+      - Item 1:
+        - **material_id**: review-sheet
+        - **locator**: paragraphs 2-3
+        - **claim**: Restore the redundant, superpose, and check equilibrium.
+- **endpoint**:
+  - **node_id**: final-internal-forces
+  - **statement**: 得到满足协调条件与整体平衡的原结构最终内力。
+  - **verification_method**: 回代 X_1 检查协调残差为零，并检查叠加后整体平衡。
+- **applicability**:
+  - **conditions**:
+    - Item 1:
+      - 结构为线弹性且小变形。
+    - Item 2:
+      - 基本体系稳定，位移与柔度采用同一符号约定。
+  - **failure_boundaries**:
+    - Item 1:
+      - 存在支座沉降、温度变形或非零规定转角时，协调方程右端不能直接写零。
+- **compression_losses**:
+  - Item 1:
+    - **omitted**: Delta_1P 与 delta_11 的具体积分展开。
+    - **restore_when**: 题目要求分段积分、图乘法或存在变截面 EI 时。
+- **retrieval_probes**:
+  - Item 1:
+    - **id**: probe-first-move
+    - **prompt**: 看到一次超静定结构时，写出建立基本体系后的前三个符号对象。
+    - **answer_hidden**: true
+    - **target_node_ids**:
+      - Item 1:
+        - basic-system
+      - Item 2:
+        - unit-load-flexibility
+  - Item 2:
+    - **id**: probe-chain-rebuild
+    - **prompt**: 闭卷从 Delta_1P 和 delta_11 重建到最终内力的步骤链。
+    - **answer_hidden**: true
+    - **target_node_ids**:
+      - Item 1:
+        - compatibility-equation
+      - Item 2:
+        - redundant-force
+      - Item 3:
+        - final-internal-forces
